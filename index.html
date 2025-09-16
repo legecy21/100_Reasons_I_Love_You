@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>100 Reasons I Love You</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            padding: 20px;
+            transition: background 1s ease;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+        
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            letter-spacing: 1px;
+            transition: color 1s ease;
+        }
+        
+        .subtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            font-weight: 400;
+            transition: color 1s ease;
+        }
+        
+        .jar-container {
+            position: relative;
+            margin: 30px auto;
+            width: 250px;
+            height: 350px;
+            perspective: 1000px;
+        }
+        
+        .jar {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s;
+            cursor: pointer;
+            transform: translateZ(0);
+        }
+        
+        .jar-front, .jar-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 20px 20px 80px 80px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        .jar-front {
+            background: rgba(255, 255, 255, 0.7);
+            border: 8px solid;
+            overflow: hidden;
+            transition: border-color 1s ease;
+        }
+        
+        .jar-back {
+            background: rgba(255, 255, 255, 0.9);
+            border: 8px solid;
+            transform: rotateY(180deg);
+            padding: 20px;
+            text-align: center;
+            transition: border-color 1s ease;
+        }
+        
+        .jar.flipped .jar-front {
+            transform: rotateY(-180deg);
+        }
+        
+        .jar.flipped .jar-back {
+            transform: rotateY(0deg);
+        }
+        
+        .lid {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120%;
+            height: 40px;
+            background: linear-gradient(to bottom, #8b4513, #5d2906);
+            border-radius: 10px;
+            z-index: 2;
+        }
+        
+        .jar-body {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 85%;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 0 0 80px 80px;
+            border-top: 3px dashed rgba(255, 255, 255, 0.5);
+            overflow: hidden;
+            display: flex;
+            flex-wrap: wrap;
+            align-content: flex-end;
+            padding: 5px;
+        }
+        
+        .heart {
+            position: absolute;
+            font-size: 2.5rem;
+            animation: float 6s infinite ease-in-out;
+            opacity: 0.7;
+        }
+        
+        .heart:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .heart:nth-child(2) { top: 20%; right: 15%; animation-delay: 1s; }
+        .heart:nth-child(3) { bottom: 30%; left: 20%; animation-delay: 2s; }
+        .heart:nth-child(4) { bottom: 20%; right: 10%; animation-delay: 3s; }
+        .heart:nth-child(5) { top: 40%; left: 30%; animation-delay: 4s; }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+        
+        .message {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            line-height: 1.4;
+            padding: 20px;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: color 1s ease;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        .counter {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            font-weight: 300;
+            transition: color 1s ease;
+        }
+        
+        .instructions {
+            margin-top: 30px;
+            font-size: 1.1rem;
+            font-style: italic;
+            transition: color 1s ease;
+        }
+        
+        .tap-counter {
+            margin-top: 15px;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: color 1s ease;
+        }
+        
+        .hearts-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .floating-heart {
+            position: absolute;
+            font-size: 2rem;
+            animation: floatUp 15s infinite linear;
+            opacity: 0;
+        }
+        
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .jar-heart {
+            font-size: 1.2rem;
+            margin: 1px;
+            opacity: 0.8;
+            animation: pulse 1.5s infinite;
+            position: absolute;
+            transition: color 0.5s ease;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .restart-btn {
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 30px;
+            font-family: 'Poppins', sans-serif;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .restart-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.7;
+            transition: color 1s ease;
+        }
+        
+        /* Theme styles */
+        .theme-pink {
+            background: linear-gradient(135deg, #ffafbd, #ffc3a0, #ffd8cb);
+            color: #8b0000;
+        }
+        
+        .theme-pink h1,
+        .theme-pink .subtitle,
+        .theme-pink .counter,
+        .theme-pink .instructions,
+        .theme-pink .footer,
+        .theme-pink .tap-counter {
+            color: #8b0000;
+        }
+        
+        .theme-pink .jar-front,
+        .theme-pink .jar-back {
+            border-color: #ff6b9c;
+        }
+        
+        .theme-pink .message {
+            color: #8b0000;
+        }
+        
+        .theme-pink .restart-btn {
+            background: #ff6b9c;
+            color: white;
+        }
+        
+        .theme-pink .jar-heart {
+            color: #ff6b9c;
+        }
+        
+        .theme-red {
+            background: linear-gradient(135deg, #ff7b7b, #ff5252, #ff0000);
+            color: #ffffff;
+        }
+        
+        .theme-red h1,
+        .theme-red .subtitle,
+        .theme-red .counter,
+        .theme-red .instructions,
+        .theme-red .footer,
+        .theme-red .tap-counter {
+            color: #ffffff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .theme-red .jar-front,
+        .theme-red .jar-back {
+            border-color: #ff0000;
+        }
+        
+        .theme-red .message {
+            color: #ffffff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+        }
+        
+        .theme-red .restart-btn {
+            background: #ff0000;
+            color: white;
+        }
+        
+        .theme-red .jar-heart {
+            color: #ff0000;
+        }
+        
+        .theme-green {
+            background: linear-gradient(135deg, #a8e6cf, #88d498, #1ea896);
+            color: #006400;
+        }
+        
+        .theme-green h1,
+        .theme-green .subtitle,
+        .theme-green .counter,
+        .theme-green .instructions,
+        .theme-green .footer,
+        .theme-green .tap-counter {
+            color: #006400;
+        }
+        
+        .theme-green .jar-front,
+        .theme-green .jar-back {
+            border-color: #1ea896;
+        }
+        
+        .theme-green .message {
+            color: #006400;
+        }
+        
+        .theme-green .restart-btn {
+            background: #1ea896;
+            color: white;
+        }
+        
+        .theme-green .jar-heart {
+            color: #1ea896;
+        }
+        
+        .theme-black {
+            background: linear-gradient(135deg, #2c3e50, #34495e, #000000);
+            color: #f1f2f6;
+        }
+        
+        .theme-black h1,
+        .theme-black .subtitle,
+        .theme-black .counter,
+        .theme-black .instructions,
+        .theme-black .footer,
+        .theme-black .tap-counter {
+            color: #f1f2f6;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .theme-black .jar-front,
+        .theme-black .jar-back {
+            border-color: #000000;
+        }
+        
+        .theme-black .message {
+            color: #f1f2f6;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+        }
+        
+        .theme-black .restart-btn {
+            background: #000000;
+            color: white;
+        }
+        
+        .theme-black .jar-heart {
+            color: #000000;
+        }
+        
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 3rem;
+            }
+            
+            .jar-container {
+                width: 200px;
+                height: 280px;
+            }
+            
+            .message {
+                font-size: 1.4rem;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body class="theme-pink">
+    <div class="hearts-bg" id="hearts-bg"></div>
+    
+    <div class="container">
+        <h1>100 Reasons I Love You</h1>
+        <p class="subtitle">Tap the jar 5 times to reveal a new reason why you're special</p>
+        
+        <div class="jar-container">
+            <div class="jar" id="jar">
+                <div class="lid"></div>
+                <div class="jar-front">
+                    <div class="jar-body" id="jar-body">
+                        <!-- Hearts will be added here dynamically -->
+                    </div>
+                    <div class="heart">❤️</div>
+                    <div class="heart">❤️</div>
+                    <div class="heart">❤️</div>
+                    <div class="heart">❤️</div>
+                    <div class="heart">❤️</div>
+                </div>
+                <div class="jar-back">
+                    <div class="message" id="message">Tap the jar 5 times to begin</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="counter" id="counter">Reason #0 of 100</div>
+        <div class="tap-counter" id="tap-counter">Taps: 0/5</div>
+        <p class="instructions">Keep tapping to fill the jar with love</p>
+        
+        <button class="restart-btn" id="restart-btn" style="display: none;">Start Over</button>
+    </div>
+    
+    <div class="footer">
+        Made with ❤️ for someone special
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const jar = document.getElementById('jar');
+            const messageElement = document.getElementById('message');
+            const counterElement = document.getElementById('counter');
+            const tapCounterElement = document.getElementById('tap-counter');
+            const restartBtn = document.getElementById('restart-btn');
+            const heartsBg = document.getElementById('hearts-bg');
+            const jarBody = document.getElementById('jar-body');
+            const body = document.body;
+            
+            // Create floating hearts background
+            for (let i = 0; i < 30; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('floating-heart');
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                heartsBg.appendChild(heart);
+            }
+            
+            // Love reasons
+            const reasons = [
+                "I love you because you are funny.",
+                "I love you because you are beautiful.",
+                "I love you because you are gorgeous.",
+                "I love you because you are thoughtful.",
+                "I love you because you are caring.",
+                "I love you because you are talented.",
+                "I love you because of your beautiful voice.",
+                "I love you because of your beautiful poems.",
+                "I love you because of your artistic side.",
+                "I love you because you are smart.",
+                "I love you because you are honest.",
+                "I love you because you are patient 🙄.",
+                "I love you because you are hardworking.",
+                "I love your smile.",
+                "I love your cheerful laugh.",
+                "I love your eyes.",
+                "I love how you make me feel.",
+                "I love you because enty 7yaty.",
+                "I love you because enty 3omry.",
+                "I love you because enty my maramero 😍.",
+                "I love you because enty qalby.",
+                "I love you because you are my moon.",
+                "I love you because enty ro7y.",
+                "I love you because you are my love.",
+                "I love you because you are my lil sweetest most gorgeous baby 😍.",
+                "I love you because you are my sweet lil princess.",
+                "I love you because of your morning voice (pop smoke😍).",
+                "I love your cooking skills (burned toast😍).",
+                "I love you because you are emo 😍.",
+                "I love that you are there for me whenever I need you.",
+                "I love you because you are my lil nerd 🤓👆.",
+                "You make me want to be a better person.",
+                "I love when you yap to me about anything.",
+                "I love when you send me vlogs.",
+                "I love when I see you happy.",
+                "You have the kindest and the sweetest heart.",
+                "I love the way your eyes light up when you smile.",
+                "You always know how to make me laugh, even on the worst days.",
+                "I love your unwavering support for my dreams.",
+                "I love listening to you talk about things you're passionate about.",
+                "You are the most thoughtful person I've ever met.",
+                "You always see the best in me.",
+                "I love the sound of your voice.",
+                "You make the ordinary moments feel extraordinary.",
+                "Your beautiful pastries, which I can't wait to taste.",
+                "I love that we can be completely silly together.",
+                "Your patience with me.",
+                "How you are able to handle me and forgive me when I make mistakes.",
+                "How you always try to fix things for us.",
+                "How you want to be a better person for me.",
+                "Your sense of humor is my favorite.",
+                "You always listen without judgment.",
+                "You make me feel safe and cherished.",
+                "Your encouragement helps me stay motivated so I can accomplish all our dreams.",
+                "I love our late-night conversations.",
+                "You have an incredible ability to comfort me.",
+                "I love the little things you do for me.",
+                "You are my best friend.",
+                "You are my girlfriend.",
+                "You are my wife.",
+                "You are om el 3yal.😍",
+                "You are om zafer.😍",
+                "You are om 4afeq.😍",
+                "Your creativity amazes me.",
+                "I love your ambition and drive.",
+                "You make me feel like the luckiest person in the world.",
+                "I love how we can talk about anything and everything.",
+                "I love your taste in music/movies/books.",
+                "You are my calm in the storm.",
+                "You are my sunshine on a cloudy day.",
+                "You always know what to say.",
+                "I love our shared memories and inside jokes. (amr diabetes 😭)",
+                "You make me feel loved for exactly who I am.",
+                "Your smile and laugh are infectious.",
+                "You are my favorite person to do nothing with.",
+                "You are my favorite person to do anything with.",
+                "I love how you're always up for an adventure with me.",
+                "You are fiercely loyal.",
+                "I love your confidence.",
+                "You make my world a better place just by being in it.",
+                "You are my star.",
+                "You are my favorite influencer 😍.",
+                "I love how you challenge me to grow and be better for you.",
+                "You are the most genuine person I know.",
+                "I love your sense of style.",
+                "You have the most beautiful soul.",
+                "I love that you are my partner in crime.",
+                "How I feel safe with you.",
+                "How I feel comfortable with you.",
+                "How I can say anything with you.",
+                "I love how you remember the small details.",
+                "You are my missing puzzle piece.",
+                "You are incredibly easy to talk to.",
+                "I love that you are my family and my everything.",
+                "Your belief in me is my greatest motivation.",
+                "I love how you always make time for us.",
+                "You are my favorite daydream.",
+                "I love your honesty.",
+                "You are the answer to a prayer I didn't know I had.",
+                "You are my everything.",
+                "I love how you inspire me to see the world differently.",
+                "Your ability to forgive is a beautiful thing.",
+                "I love the way you love me.",
+                "You are my favorite story.",
+                "I love that you are both my anchor and my sails.",
+                "Your laugh is my favorite sound.",
+                "You are the definition of a true partner.",
+                "I love how you're always learning and growing for me.",
+                "You make me feel whole.",
+                "You are my safe harbor.",
+                "I love how you love the things I love.",
+                "I love how we understand each other.",
+                "I love how we have a lot of things in common with each other.",
+                "You are the reason I believe in soulmates.",
+                "I love that our love story is my favorite one. (Better than Romeo and Juliet😤)",
+                "You are more than I ever dreamed of.",
+                "I love that I get to spend my life with you.",
+                "You are the beat to my heart.",
+                "You are my greatest blessing.",
+                "I love you more than words can say.",
+                "Because you are you."
+            ];
+            
+            // Theme classes
+            const themes = ['theme-pink', 'theme-red', 'theme-green', 'theme-black'];
+            
+            let currentIndex = 0;
+            let tapCount = 0;
+            let currentTheme = 'theme-pink';
+            let lastTheme = '';
+            let isFlipped = false;
+            let heartsInJar = [];
+            let messageDisplayed = false;
+            
+            // Function to get a random theme (no repeats)
+            function getRandomTheme() {
+                let newTheme;
+                do {
+                    newTheme = themes[Math.floor(Math.random() * themes.length)];
+                } while (newTheme === lastTheme && themes.length > 1);
+                
+                lastTheme = newTheme;
+                return newTheme;
+            }
+            
+            // Function to get theme color
+            function getThemeColor(theme) {
+                switch(theme) {
+                    case 'theme-pink': return '#ff6b9c';
+                    case 'theme-red': return '#ff0000';
+                    case 'theme-green': return '#1ea896';
+                    case 'theme-black': return '#000000';
+                    default: return '#ff6b9c';
+                }
+            }
+            
+            // Function to add hearts to the jar with theme color
+            function addHeartsToJar(count) {
+                const themeColor = getThemeColor(currentTheme);
+                
+                for (let i = 0; i < count; i++) {
+                    const heart = document.createElement('div');
+                    heart.classList.add('jar-heart');
+                    heart.innerHTML = '❤️';
+                    heart.style.color = themeColor;
+                    
+                    // Random position within the jar
+                    heart.style.left = Math.random() * 85 + 5 + '%';
+                    heart.style.bottom = Math.random() * 85 + 5 + '%';
+                    
+                    // Random size
+                    const size = Math.random() * 12 + 10;
+                    heart.style.fontSize = size + 'px';
+                    
+                    // Random rotation
+                    heart.style.transform = `rotate(${Math.random() * 40 - 20}deg)`;
+                    
+                    jarBody.appendChild(heart);
+                    heartsInJar.push(heart);
+                }
+            }
+            
+            // Function to clear hearts from jar
+            function clearHeartsFromJar() {
+                heartsInJar.forEach(heart => {
+                    heart.remove();
+                });
+                heartsInJar = [];
+            }
+            
+            // Function to show message after 5 taps
+            function showReason() {
+                if (currentIndex < reasons.length) {
+                    // Apply a new theme
+                    const newTheme = getRandomTheme();
+                    themes.forEach(theme => body.classList.remove(theme));
+                    body.classList.add(newTheme);
+                    currentTheme = newTheme;
+                    
+                    // Flip jar
+                    jar.classList.add('flipped');
+                    isFlipped = true;
+                    messageDisplayed = true;
+                    
+                    // Show message
+                    messageElement.textContent = reasons[currentIndex];
+                    
+                    // Update counter
+                    counterElement.textContent = `Reason #${currentIndex + 1} of 100`;
+                    
+                    // Increment index
+                    currentIndex++;
+                } else {
+                    // Show completion message
+                    messageElement.textContent = "You've seen all 100 reasons why I love you! 💖";
+                    restartBtn.style.display = 'inline-block';
+                    messageDisplayed = true;
+                }
+            }
+            
+            // Function to reset for next message
+            function resetForNextMessage() {
+                // Flip jar back
+                jar.classList.remove('flipped');
+                isFlipped = false;
+                messageDisplayed = false;
+                
+                // Reset tap counter
+                tapCount = 0;
+                tapCounterElement.textContent = `Taps: 0/5`;
+                
+                // Clear hearts
+                clearHeartsFromJar();
+                
+                // Show instruction message
+                messageElement.textContent = "Tap the jar 5 times to begin";
+            }
+            
+            // Event listener for jar click
+            jar.addEventListener('click', function() {
+                // If a message is currently displayed, reset for next message
+                if (messageDisplayed) {
+                    resetForNextMessage();
+                    return;
+                }
+                
+                // If jar is flipped but no message is displayed (shouldn't happen)
+                if (isFlipped) {
+                    resetForNextMessage();
+                    return;
+                }
+                
+                // Increment tap count
+                tapCount++;
+                tapCounterElement.textContent = `Taps: ${tapCount}/5`;
+                
+                // Add different number of hearts for each tap
+                let heartsToAdd = 0;
+                switch(tapCount) {
+                    case 1:
+                        heartsToAdd = 15;
+                        break;
+                    case 2:
+                        heartsToAdd = 25;
+                        break;
+                    case 3:
+                        heartsToAdd = 35;
+                        break;
+                    case 4:
+                        heartsToAdd = 45;
+                        break;
+                    case 5:
+                        heartsToAdd = 50;
+                        break;
+                }
+                
+                addHeartsToJar(heartsToAdd);
+                
+                // After 5 taps, show the message
+                if (tapCount >= 5) {
+                    setTimeout(showReason, 800);
+                }
+            });
+            
+            // Event listener for restart button
+            restartBtn.addEventListener('click', function() {
+                currentIndex = 0;
+                tapCount = 0;
+                jar.classList.remove('flipped');
+                isFlipped = false;
+                messageDisplayed = false;
+                messageElement.textContent = "Tap the jar 5 times to begin";
+                counterElement.textContent = "Reason #0 of 100";
+                tapCounterElement.textContent = "Taps: 0/5";
+                restartBtn.style.display = 'none';
+                
+                // Apply initial theme
+                body.classList.remove(...themes);
+                body.classList.add('theme-pink');
+                currentTheme = 'theme-pink';
+                lastTheme = '';
+                
+                // Clear hearts
+                clearHeartsFromJar();
+            });
+        });
+    </script>
+</body>
+</html>
